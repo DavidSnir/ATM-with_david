@@ -1,0 +1,11 @@
+
+Authers:
+David Snir & Yuval Dar
+
+Project Structure:
+main.py	        -   only open window
+models.py	    -   pure logic of classes "Bank" "Account" no tkinter
+storage.py	    -   write and read data to a file
+ui.py	        -   no logic. tkiner.
+data.json       -   auto create when run program. do not upload to GitHub
+

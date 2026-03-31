@@ -1,0 +1,10 @@
+# copy from fitussi:
+data.json
+__pycache__/
+*.pyc
+
+# genetal ignore
+*.json
+
+# virtual environment
+.venv
