@@ -86,6 +86,8 @@ class Account:
 class Bank:
     def __init__(self):
         self._accounts: dict[int, Account] = {}
+        # _ convention for private.
+        # [int, Account] informational only
 
     def create_account(self, name: str, balance: float = 0) -> Account:
         account_id = self._generate_id()
