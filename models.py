@@ -12,8 +12,8 @@ class Account:
         self.name = name
         self.pin = self.generate_pin()
         self.balance = balance
-        self.blocked = False
-        self.actions = []
+        self.is_blocked = False
+        self.actions_log = []
 
 
     # def generate_id():
@@ -28,8 +28,8 @@ class Account:
     def withdraw(self, amount: float, input_pin: int, action_id: int):
         if self.check_pin(input_pin) and amount > 0.0 and amount < self.balance:
             self.balance -= amount
-            self.record_action(action_id, dt.datetime.now(),amount,"withdraw")
-            return "succses"
+            self.record_action(action_id, dt.datetime.now(), amount, "withdraw")
+            return "success"
         else:
             return "failed"
 
@@ -39,8 +39,8 @@ class Account:
     def deposit(self, amount: float, input_pin: int, action_id: int):
         if self.check_pin(input_pin) and amount > 0.0:
             self.balance += amount
-            self.record_action(action_id, dt.datetime.now(),amount,"deposit")
-            return "succses"
+            self.record_action(action_id, dt.datetime.now(), amount, "deposit")
+            return "success"
         else:
             return "failed"
 
@@ -50,35 +50,35 @@ class Account:
     def change_pin(self, old_pin: int, new_pin: int):
         if self.check_pin(old_pin):
             self.pin = new_pin
-            return "succses"
+            return "success"
         else:
             return "failed"
 
     # def block_account(self):
-    #     self.blocked = True
+    #     self.is_blocked = True
 
     # def unblock_account(self):
-    #     self.blocked = False
+    #     self.is_blocked = False
 
     def record_action(self, action_id: int, date_time: dt.datetime, amount: float, type: str):
-        if type == "withdraw" or type == "deposit" or type == "transaction_in" or type == "transaction_out":
-            self.actions.append({
+        if type in {"withdraw", "deposit", "transaction_in", "transaction_out"}:
+            self.actions_log.append({
                 "action_id": action_id,
                 "time": date_time,
                 "amount": amount,
                 "type": type
             })
 
-    def actions_to_dictionary(self):
-        actions_dictionary = {}
-        for action in self.actions:
+    def actions_log_to_dictionary(self):
+        actions_log_dictionary = {}
+        for action in self.actions_log:
             key = action["action_id"]
-            actions_dictionary[key] = {
+            actions_log_dictionary[key] = {
                 "time": str(action["time"]),
                 "amount": action["amount"],
                 "type": action["type"]
                 }
-        return actions_dictionary
+        return actions_log_dictionary
 
 
 class Bank(Account):
@@ -86,7 +86,7 @@ class Bank(Account):
 
     def __init__(self, username, balance=0):
         super().__init__(self.create_account_id(), username, balance)
-        Bank.accounts[self.account_id] = self
+        Bank.accounts[self.id] = self
 
     @classmethod
     def create_account_id(cls):
@@ -102,7 +102,7 @@ class Bank(Account):
     @classmethod
     def list_all_accounts(cls):
         for account_id, account in cls.accounts.items():
-            print(f"ID: {account_id} | Username: {account.username} | Balance: {account.balance} | Active: {account.is_active} | PIN: {account.pin}")
+            print(f"ID: {account_id} | Username: {account.name} | Balance: {account.balance} | Active: {account.is_blocked} | PIN: {account.pin}")
 
     @staticmethod
     def is_admin_pin(entered_password):
