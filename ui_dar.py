@@ -189,7 +189,35 @@ class ATMApp:
         pass
 
     def handle_history(self):
-        pass
+        """use fitussi first easier option - 'insert(tk.End, text) and not 'tk.Text' and "STATE=DISABLED" to make it read-only, because we have only 'read' and no 'write' needs"""
+        account = self.bank.get_account(self.current_account_id)
+        window = tk.Toplevel(self.root)
+        window.title("Transaction History")
+        window.geometry("420x300")
+
+        tk.Label(window, text="Transaction History", font=("Arial", 14, "bold")).pack(pady=8)
+
+        frame = tk.Frame(window)
+        frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+
+        scrollbar = tk.Scrollbar(frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        listbox = tk.Listbox(frame, yscrollcommand=scrollbar.set, font=("Courier", 10), width=55)
+        listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        scrollbar.config(command=listbox.yview)
+
+        if not account.actions_log:
+            listbox.insert(tk.END, "  No transactions yet.")
+        else:
+            for action in account.actions_log:
+                time_str = action["time"].strftime("%Y-%m-%d %H:%M")
+                amount_str = f"${action['amount']:,.2f}"
+                action_type = action["type"].replace("_", " ").title()
+                counterparty = f" -> {action['counterparty']}" if action["counterparty"] else ""
+                listbox.insert(tk.END, f"  {time_str}  {action_type:<18} {amount_str}{counterparty}")
+
+        tk.Button(window, text="Close", command=window.destroy).pack(pady=8)
 
     def handle_change_pin(self):
         pass
