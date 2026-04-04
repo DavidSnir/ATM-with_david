@@ -77,15 +77,42 @@ class ATMApp:
     # * UI DESIGN of 'user Menu' screen - no logic * #
     def show_user_menu(self, account_id):
         self.clear_screen()
+        account = self.bank.get_account(account_id)
 
-        tk.Label(self.root, text="User Menu", bg="#1e1e1e", fg="#ffffff",
-                 font=("Arial", 16, "bold")).place(relx=0.5, rely=0.1, anchor="center")
-        tk.Label(self.root, text=f"Account: {account_id}", bg="#1e1e1e", fg="#aaaaaa",
-                 font=("Arial", 11)).place(relx=0.5, rely=0.2, anchor="center")
+        # --- info frame ---
+        info_frame = tk.Frame(self.root, bg="#2e2e2e", bd=0)
+        info_frame.place(relx=0.5, rely=0.13, anchor="center", width=320)
 
-        tk.Button(self.root, text="Log Out", width=25, bg="#3c3c3c", fg="#ffffff",
-                  activebackground="#555555", command=self.show_login_screen).place(relx=0.5, rely=0.85, anchor="center")
+        tk.Label(info_frame, text=account.name, bg="#2e2e2e", fg="#ffffff",
+                 font=("Arial", 15, "bold")).pack(pady=(12, 2))
+        tk.Label(info_frame, text=f"ID: {account.id}", bg="#2e2e2e", fg="#aaaaaa",
+                 font=("Arial", 11)).pack()
+        tk.Label(info_frame, text=f"Balance: ${account.balance:,.2f}", bg="#2e2e2e", fg="#4caf50",
+                 font=("Arial", 13, "bold")).pack(pady=(4, 12))
+
+        # --- buttons frame ---
+        btn_frame = tk.Frame(self.root, bg="#1e1e1e")
+        btn_frame.place(relx=0.5, rely=0.57, anchor="center")
+
+        btn_cfg = dict(width=25, bg="#3c3c3c", fg="#ffffff",
+                       activebackground="#555555", font=("Arial", 11), relief="flat")
+
+        tk.Button(btn_frame, text="Deposit",    **btn_cfg).pack(pady=5)
+        tk.Button(btn_frame, text="Withdraw",   **btn_cfg).pack(pady=5)
+        tk.Button(btn_frame, text="Send",       **btn_cfg).pack(pady=5)
+        tk.Button(btn_frame, text="History",    **btn_cfg).pack(pady=5)
+        tk.Button(btn_frame, text="Change PIN", **btn_cfg).pack(pady=5)
+        tk.Button(btn_frame, text="Exit", command=self.root.destroy,
+                  width=25, bg="#5a1a1a", fg="#ffffff",
+                  activebackground="#7a2a2a", font=("Arial", 11), relief="flat").pack(pady=5)
+
+        tk.Button(self.root, text="← Log Out", width=25, bg="#3c3c3c", fg="#aaaaaa",
+                  activebackground="#555555", font=("Arial", 10), relief="flat",
+                  command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
     # * UI DESIGN of 'user Menu' screen - no logic -----finish * #
+    # * Logic of 'user Menu' screen  * #
+
+    # * Logic of 'user Menu' screen -----finish * #
 
     # * shared logic of all screens * #
     def clear_screen(self):
