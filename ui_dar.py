@@ -99,7 +99,7 @@ class ATMApp:
 
         tk.Button(btn_frame, text="Deposit",    **btn_cfg).pack(pady=5)
         tk.Button(btn_frame, text="Withdraw",   **btn_cfg).pack(pady=5)
-        tk.Button(btn_frame, text="Send",       **btn_cfg).pack(pady=5)
+        tk.Button(btn_frame, text="Transfer",       **btn_cfg).pack(pady=5)
         tk.Button(btn_frame, text="History",    **btn_cfg).pack(pady=5)
         tk.Button(btn_frame, text="Change PIN", **btn_cfg).pack(pady=5)
         tk.Button(btn_frame, text="Exit entire App", command=self.root.destroy,
