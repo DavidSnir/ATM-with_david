@@ -154,7 +154,33 @@ class ATMApp:
         tk.Button(window, text="Deposit", command=confirm_deposit).pack(pady=10)
 
     def handle_withdraw(self):
-        pass
+        window = tk.Toplevel(self.root)
+        window.title("משיכה")
+
+        tk.Label(window, text="Enter amount:").pack(pady=10)
+        amount_entry = tk.Entry(window)
+        amount_entry.pack(pady=5)
+
+        def confirm_withdraw():
+            try:
+                amount = float(amount_entry.get())
+                if amount <= 0:
+                    messagebox.showerror("Error", "Amount must be a positive number", parent=window)
+                    return
+            except ValueError:
+                messagebox.showerror("Error", "Amount must be a positive number", parent=window)
+                return
+
+            account = self.bank.get_account(self.current_account_id)
+            success = account.withdraw(amount, self.current_pin)
+            if success:
+                save_data(self.bank)
+                messagebox.showinfo("Success", f"Withdrew ${amount:,.2f} successfully", parent=window)
+                window.destroy()
+            else:
+                messagebox.showerror("Error", "Withdrawal failed", parent=window)
+
+        tk.Button(window, text="Withdraw", command=confirm_withdraw).pack(pady=10)
 
     def handle_transfer(self):
         pass
