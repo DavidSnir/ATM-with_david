@@ -62,13 +62,21 @@ class ATMApp:
             else:
                 messagebox.showerror("Login Failed", message)
 
+        def handle_admin():
+            password = tk.simpledialog.askstring("Admin Login", "Enter admin password:", show="*")
+            if self.bank.is_admin_pin(password):
+                # self.show_admin_zone()
+                messagebox.showerror("good job", "Correct admin password! (Admin zone not implemented yet)")
+            else:
+                messagebox.showerror("Access Denied", "Incorrect admin password")
+
         # Log In button:
         tk.Button(self.root, text="Log In", width=25, bg="#3c3c3c", fg="#ffffff",
                   activebackground="#555555", command=handle_login).place(relx=0.5, rely=0.65, anchor="center")
 
         # Admin Zone button:
         tk.Button(self.root, text="Admin Zone", width=25, bg="#3c3c3c", fg="#ffffff",
-                  activebackground="#555555").place(relx=0.5, rely=0.72, anchor="center")
+                  activebackground="#555555", command=handle_admin).place(relx=0.5, rely=0.72, anchor="center")
 
         # Exit button:
         tk.Button(self.root, text="Exit", width=25, command=self.root.destroy,
