@@ -17,7 +17,7 @@ class ATMApp(tk.Tk):
     def __init__(self, bank: Bank):
         super().__init__()
         self.title("DevOps ATM")
-        self.geometry(f"{styles.window_width}x{styles.window_hight}")
+        # self.geometry(f"{styles.window_width}x{styles.window_hight}")
         self.resizable(False, False)
         self.configure(bg=styles.color_dark_bg)
         
@@ -71,15 +71,15 @@ class LoginPage(ttk.Frame):
                              font=styles.font_detils)
         
         # Entry style
-        self.style.configure("Login.TEntry", 
-                             fieldbackground=styles.color_less_dark_bg,
-                             foreground=styles.color_text_color,
-                             insertbackground=styles.color_text_color,
-                             relief="flat",
-                             borderwidth=0,
-                             highlightthickness=0,
-                             bordercolor=styles.color_less_dark_bg
-                             )
+        # self.style.configure("Login.TEntry", 
+        #                      fieldbackground=styles.color_less_dark_bg,
+        #                      foreground=styles.color_text_color,
+        #                      insertbackground=styles.color_text_color,
+        #                      relief="flat",
+        #                      borderwidth=0,
+        #                      highlightthickness=0,
+        #                      bordercolor=styles.color_less_dark_bg
+        #                      )
         
         # Button style
         self.style.configure("Login.TButton",
@@ -141,11 +141,14 @@ class LoginPage(ttk.Frame):
         )
         self.id_entry_frame_background.pack(side="top", fill="x", pady=(0, 2))
         
-        self.id_entry = ttk.Entry(
+        self.id_entry = tk.Entry(
             self.id_entry_frame_background,
             font=styles.font_field,
-            style="Login.TEntry"
-
+            background=styles.color_less_dark_bg,
+            foreground=styles.color_text_color,
+            borderwidth=0,
+            insertbackground=styles.color_text_color
+  
         )
         self.id_entry.pack(side="top", fill="x", ipady=12, padx=15)
         
@@ -170,11 +173,14 @@ class LoginPage(ttk.Frame):
         )
         self.pin_entry_frame_background.pack(side="top", fill="x", pady=(0, 2))
         
-        self.pin_entry = ttk.Entry(
+        self.pin_entry = tk.Entry(
             self.pin_entry_frame_background,
             font=styles.font_field,
-            style="Login.TEntry",
-            show="*"
+            background=styles.color_less_dark_bg,
+            foreground=styles.color_text_color,
+            borderwidth=0,
+            insertbackground=styles.color_text_color,
+            show="*"  
         )
         self.pin_entry.pack(side="top", fill="x", ipady=12, padx=15)
         
@@ -184,4 +190,4 @@ class LoginPage(ttk.Frame):
             style="Login.TButton",
             cursor="hand2"
         )
-        self.auth_button.pack(pady=(20, 60), padx=62, fill="x", anchor="w")
+        self.auth_button.pack(pady=(20, 102), padx=62, fill="x", anchor="w")
