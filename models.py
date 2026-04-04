@@ -14,7 +14,7 @@ class Account:
         self.pin = self.generate_pin()
         self.balance = balance
         self.is_blocked = False
-        self.actions_log = []
+        self.actions_log: list[dict[dt.datetime, float, str, str]] = []
 
     def generate_pin(self) -> int:
         return rd.randint(1000, 9999)
@@ -61,8 +61,8 @@ class Account:
         else:
             return False
 
-    def record_action(self, date_time: dt.datetime, amount: float, type: str, counterparty=None):
-        if type in {"withdraw", "deposit", "transaction_in", "transaction_out"}:
+    def record_action(self, date_time: dt.datetime, amount: float, action_type: str, counterparty=None):
+        if action_type in {"withdraw", "deposit", "transaction_in", "transaction_out"}:
             self.actions_log.append({
                 "time": date_time,
                 "amount": amount,
