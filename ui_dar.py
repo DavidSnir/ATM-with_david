@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, simpledialog
 from storage import load_data, save_data
 
 
@@ -63,7 +63,7 @@ class ATMApp:
                 messagebox.showerror("Login Failed", message)
 
         def handle_admin():
-            password = tk.simpledialog.askstring("Admin Login", "Enter admin password:", show="*")
+            password = simpledialog.askstring("Admin Login", "Enter admin password:", show="*")
             if self.bank.is_admin_pin(password):
                 # self.show_admin_zone()
                 messagebox.showerror("good job", "Correct admin password! (Admin zone not implemented yet)")
