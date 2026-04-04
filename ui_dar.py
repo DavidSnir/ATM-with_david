@@ -56,6 +56,8 @@ class ATMApp:
 
             success, message = self.bank.log_in_account(account_id, pin)
             if success:
+                self.current_account_id = account_id
+                self.current_pin = pin
                 self.show_user_menu(account_id)
             else:
                 messagebox.showerror("Login Failed", message)
@@ -97,21 +99,69 @@ class ATMApp:
         btn_cfg = dict(width=25, bg="#3c3c3c", fg="#ffffff",
                        activebackground="#555555", font=("Arial", 11), relief="flat")
 
-        tk.Button(btn_frame, text="Deposit",    **btn_cfg).pack(pady=5)
-        tk.Button(btn_frame, text="Withdraw",   **btn_cfg).pack(pady=5)
-        tk.Button(btn_frame, text="Transfer",       **btn_cfg).pack(pady=5)
-        tk.Button(btn_frame, text="History",    **btn_cfg).pack(pady=5)
-        tk.Button(btn_frame, text="Change PIN", **btn_cfg).pack(pady=5)
-        tk.Button(btn_frame, text="Exit entire App", command=self.root.destroy,
-                  width=25, bg="#5a1a1a", fg="#ffffff",
-                  activebackground="#7a2a2a", font=("Arial", 11), relief="flat").pack(pady=5)
+        deposit_btn = tk.Button(btn_frame, text="Deposit", **btn_cfg)
+        deposit_btn.pack(pady=5)
+        deposit_btn.config(command=self.handle_deposit)
+        withdraw_btn = tk.Button(btn_frame, text="Withdraw",   **btn_cfg)
+        withdraw_btn.pack(pady=5)
+        withdraw_btn.config(command=self.handle_withdraw)
+        transfer_btn = tk.Button(btn_frame, text="Transfer",       **btn_cfg)
+        transfer_btn.pack(pady=5)
+        history_btn = tk.Button(btn_frame, text="History",    **btn_cfg)
+        history_btn.pack(pady=5)
+        change_pin_btn = tk.Button(btn_frame, text="Change PIN", **btn_cfg)
+        change_pin_btn.pack(pady=5)
+        exit_btn = tk.Button(btn_frame, text="Exit entire App", **btn_cfg)
+        exit_btn.pack(pady=5)
 
         tk.Button(self.root, text="← Log Out", width=25, bg="#3c3c3c", fg="#aaaaaa",
                   activebackground="#555555", font=("Arial", 10), relief="flat",
                   command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
     # * UI DESIGN of 'user Menu' screen - no logic -----finish * #
-    # * Logic of 'user Menu' screen  * #
 
+    # * Logic of 'user Menu' screen  * #
+    def handle_deposit(self):
+        window = tk.Toplevel(self.root)
+        window.title("הפקדה")
+
+        tk.Label(window, text="Enter amount:").pack(pady=10)
+        amount_entry = tk.Entry(window)
+        amount_entry.pack(pady=5)
+
+        def confirm_deposit():
+            try:
+                amount = float(amount_entry.get())
+                if amount <= 0:
+                    messagebox.showerror("Error", "Amount must be a positive number", parent=window)
+                    return
+            except ValueError:
+                messagebox.showerror("Error", "Amount must be a positive number", parent=window)
+                return
+
+            account = self.bank.get_account(self.current_account_id)
+            success = account.deposit(amount, self.current_pin)
+            if success:
+                messagebox.showinfo("Success", f"Deposited ${amount:,.2f} successfully", parent=window)
+                window.destroy()
+            else:
+                messagebox.showerror("Error", "Deposit failed", parent=window)
+
+        tk.Button(window, text="Deposit", command=confirm_deposit).pack(pady=10)
+
+    def handle_withdraw(self):
+        pass
+
+    def handle_transfer(self):
+        pass
+
+    def handle_history(self):
+        pass
+
+    def handle_change_pin(self):
+        pass
+
+    def handle_exit(self):
+        pass
     # * Logic of 'user Menu' screen -----finish * #
 
     # * shared logic of all screens * #
