@@ -5,6 +5,7 @@ from models import Bank, Account
 import storage
 import styles
 import datetime as dt
+import ui.py
 # Fix pixelation on Windows
 # try:
 #     ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -143,6 +144,9 @@ class LogPage(ttk.Frame):
 
         return frame_outside
 
+def load_basic_ui():
+    bank = storage.load_data()
+    ui.ATMApp().run()
 
 class LoginPage(ttk.Frame):
     """the first screen use sees"""
