@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 from storage import load_data, save_data
+from style import (BG, BG_CARD, BG_TREE, BTN, BTN_ACTIVE,
+                   FG, FG_MUTED, FG_LIGHT,
+                   GREEN, GREEN_ALT, GREEN_BTN, GREEN_BTN_A,
+                   RED, ORANGE, ORANGE_A)
 
 
 class ATMApp:
@@ -14,11 +18,11 @@ class ATMApp:
         self.root.geometry("390x844")  # iPhone 14 portrait
 
         # for dark background
-        self.root.configure(bg="#1e1e1e")
+        self.root.configure(bg=BG)
         style = ttk.Style()
         style.theme_use("clam")  # for color overrides
-        style.configure("TButton", background="#3c3c3c", foreground="#ffffff")
-        style.configure("TLabel",  background="#1e1e1e", foreground="#ffffff")
+        style.configure("TButton", background=BTN, foreground=FG)
+        style.configure("TLabel",  background=BG,  foreground=FG)
         # for dark background - end.
         # * shared UI DESIGN for all screens --- finish * #
         # * shared UI DESIGN for all screens --- finish * #
@@ -29,20 +33,20 @@ class ATMApp:
         self.clear_screen()
 
         # big title:
-        tk.Label(self.root, text="ATM machine", bg="#1e1e1e", fg="#ffffff",
+        tk.Label(self.root, text="ATM machine", bg=BG, fg=FG,
                  font=("Arial", 16, "bold")).place(relx=0.5, rely=0.05, anchor="center")
 
         # account ID entry:
-        tk.Label(self.root, text="Account ID", bg="#1e1e1e", fg="#aaaaaa",
+        tk.Label(self.root, text="Account ID", bg=BG, fg=FG_MUTED,
                  font=("Arial", 11)).place(relx=0.5, rely=0.35, anchor="center")
-        account_entry = tk.Entry(self.root, width=28, bg="#2e2e2e", fg="#ffffff", insertbackground="#ffffff",
+        account_entry = tk.Entry(self.root, width=28, bg=BG_CARD, fg=FG, insertbackground=FG,
                                  relief="flat", font=("Arial", 13))
         account_entry.place(relx=0.5, rely=0.41, anchor="center")
 
         # PIN entry (hidden):
-        tk.Label(self.root, text="PIN", bg="#1e1e1e", fg="#aaaaaa",
+        tk.Label(self.root, text="PIN", bg=BG, fg=FG_MUTED,
                  font=("Arial", 11)).place(relx=0.5, rely=0.50, anchor="center")
-        pin_entry = tk.Entry(self.root, width=28, show="*", bg="#2e2e2e", fg="#ffffff", insertbackground="#ffffff",
+        pin_entry = tk.Entry(self.root, width=28, show="*", bg=BG_CARD, fg=FG, insertbackground=FG,
                              relief="flat", font=("Arial", 13))
         pin_entry.place(relx=0.5, rely=0.56, anchor="center")
 
@@ -73,16 +77,16 @@ class ATMApp:
                 messagebox.showerror("Access Denied", "Incorrect admin password")
 
         # Log In button:
-        tk.Button(self.root, text="Log In", width=25, bg="#3c3c3c", fg="#ffffff",
-                  activebackground="#555555", command=handle_login).place(relx=0.5, rely=0.65, anchor="center")
+        tk.Button(self.root, text="Log In", width=25, bg=BTN, fg=FG,
+                  activebackground=BTN_ACTIVE, command=handle_login).place(relx=0.5, rely=0.65, anchor="center")
 
         # Admin Zone button:
-        tk.Button(self.root, text="Admin Zone", width=25, bg="#3c3c3c", fg="#ffffff",
-                  activebackground="#555555", command=handle_admin).place(relx=0.5, rely=0.72, anchor="center")
+        tk.Button(self.root, text="Admin Zone", width=25, bg=BTN, fg=FG,
+                  activebackground=BTN_ACTIVE, command=handle_admin).place(relx=0.5, rely=0.72, anchor="center")
 
         # Exit button:
         tk.Button(self.root, text="Exit", width=25, command=self.root.destroy,
-                  bg="#3c3c3c", fg="#ffffff", activebackground="#555555").place(relx=0.5, rely=0.79, anchor="center")
+                  bg=BTN, fg=FG, activebackground=BTN_ACTIVE).place(relx=0.5, rely=0.79, anchor="center")
 
     # * UI DESIGN + Logic of 'Log In' screen -----finish * #
     # * UI DESIGN + Logic of 'Log In' screen -----finish * #
@@ -94,23 +98,23 @@ class ATMApp:
         account = self.bank.get_account(account_id)
 
         # --- info frame ---
-        info_frame = tk.Frame(self.root, bg="#2e2e2e", bd=0)
+        info_frame = tk.Frame(self.root, bg=BG_CARD, bd=0)
         info_frame.place(relx=0.5, rely=0.13, anchor="center", width=320)
 
-        tk.Label(info_frame, text=account.name, bg="#2e2e2e", fg="#ffffff",
+        tk.Label(info_frame, text=account.name, bg=BG_CARD, fg=FG,
                  font=("Arial", 15, "bold")).pack(pady=(12, 2))
-        tk.Label(info_frame, text=f"ID: {account.id}", bg="#2e2e2e", fg="#aaaaaa",
+        tk.Label(info_frame, text=f"ID: {account.id}", bg=BG_CARD, fg=FG_MUTED,
                  font=("Arial", 11)).pack()
-        self.balance_label = tk.Label(info_frame, text=f"Balance: ${account.balance:,.2f}", bg="#2e2e2e", fg="#4caf50",
+        self.balance_label = tk.Label(info_frame, text=f"Balance: ${account.balance:,.2f}", bg=BG_CARD, fg=GREEN,
                                       font=("Arial", 13, "bold"))
         self.balance_label.pack(pady=(4, 12))
 
         # --- buttons frame ---
-        btn_frame = tk.Frame(self.root, bg="#1e1e1e")
+        btn_frame = tk.Frame(self.root, bg=BG)
         btn_frame.place(relx=0.5, rely=0.57, anchor="center")
 
-        btn_cfg = dict(width=25, bg="#3c3c3c", fg="#ffffff",
-                       activebackground="#555555", font=("Arial", 11), relief="flat")
+        btn_cfg = dict(width=25, bg=BTN, fg=FG,
+                       activebackground=BTN_ACTIVE, font=("Arial", 11), relief="flat")
 
         deposit_btn = tk.Button(btn_frame, text="Deposit", **btn_cfg)
         deposit_btn.pack(pady=5)
@@ -131,8 +135,8 @@ class ATMApp:
         exit_btn.pack(pady=5)
         exit_btn.config(command=self.handle_exit)
 
-        tk.Button(self.root, text="← Log Out", width=25, bg="#3c3c3c", fg="#aaaaaa",
-                  activebackground="#555555", font=("Arial", 10), relief="flat",
+        tk.Button(self.root, text="← Log Out", width=25, bg=BTN, fg=FG_MUTED,
+                  activebackground=BTN_ACTIVE, font=("Arial", 10), relief="flat",
                   command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
     # * UI DESIGN of 'user Menu' screen - no logic -----finish * #
     # * UI DESIGN of 'user Menu' screen - no logic -----finish * #
@@ -300,11 +304,11 @@ class ATMApp:
         window = tk.Toplevel(self.root)
         window.title("Change PIN")
         window.geometry("280x220")
-        window.configure(bg="#1e1e1e")
+        window.configure(bg=BG)
 
-        lbl_cfg = dict(bg="#1e1e1e", fg="#aaaaaa", font=("Arial", 10))
-        entry_cfg = dict(width=22, show="*", bg="#2e2e2e", fg="#ffffff",
-                         insertbackground="#ffffff", relief="flat", font=("Arial", 12))
+        lbl_cfg = dict(bg=BG, fg=FG_MUTED, font=("Arial", 10))
+        entry_cfg = dict(width=22, show="*", bg=BG_CARD, fg=FG,
+                         insertbackground=FG, relief="flat", font=("Arial", 12))
 
         tk.Label(window, text="Current PIN", **lbl_cfg).pack(pady=(18, 2))
         current_entry = tk.Entry(window, **entry_cfg)
@@ -340,8 +344,8 @@ class ATMApp:
             else:
                 messagebox.showerror("Error", "Current PIN is incorrect", parent=window)
 
-        tk.Button(window, text="Change PIN", bg="#3c3c3c", fg="#ffffff",
-                  activebackground="#555555", relief="flat",
+        tk.Button(window, text="Change PIN", bg=BTN, fg=FG,
+                  activebackground=BTN_ACTIVE, relief="flat",
                   command=confirm_change).pack(pady=14)
 
     def handle_exit(self):
@@ -353,15 +357,15 @@ class ATMApp:
     # * UI of 'Admin Zone' screen * #
     def show_admin_zone(self):
         self.clear_screen()
-        tk.Label(self.root, text="Admin Zone", bg="#1e1e1e", fg="#ffffff",
+        tk.Label(self.root, text="Admin Zone", bg=BG, fg=FG,
                  font=("Arial", 16, "bold")).place(relx=0.5, rely=0.05, anchor="center")
 
         # --- buttons frame ---
-        btn_frame = tk.Frame(self.root, bg="#1e1e1e")
+        btn_frame = tk.Frame(self.root, bg=BG)
         btn_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-        btn_cfg = dict(width=25, bg="#3c3c3c", fg="#ffffff",
-                       activebackground="#555555", font=("Arial", 11), relief="flat")
+        btn_cfg = dict(width=25, bg=BTN, fg=FG,
+                       activebackground=BTN_ACTIVE, font=("Arial", 11), relief="flat")
 
         create_account_btn = tk.Button(btn_frame, text="Create new Account", **btn_cfg,
                                        command=self.handle_create_account)
@@ -375,8 +379,8 @@ class ATMApp:
                                       command=self.handle_block_account)
         block_account_btn.pack(pady=5)
 
-        tk.Button(self.root, text="← Log Out", width=25, bg="#3c3c3c", fg="#aaaaaa",
-                  activebackground="#555555", font=("Arial", 10), relief="flat",
+        tk.Button(self.root, text="← Log Out", width=25, bg=BTN, fg=FG_MUTED,
+                  activebackground=BTN_ACTIVE, font=("Arial", 10), relief="flat",
                   command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
 
     # * UI of 'Admin Zone' screen -----finish * #
@@ -388,10 +392,10 @@ class ATMApp:
         window = tk.Toplevel(self.root)
         window.title("All Accounts")
         window.geometry("600x400")
-        window.configure(bg="#1e1e1e")
+        window.configure(bg=BG)
         window.grab_set()
 
-        tk.Label(window, text="All Accounts", bg="#1e1e1e", fg="#ffffff",
+        tk.Label(window, text="All Accounts", bg=BG, fg=FG,
                  font=("Arial", 14, "bold")).pack(pady=(12, 6))
 
         columns = ("id", "name", "balance", "status")
@@ -408,13 +412,13 @@ class ATMApp:
         tree.column("status", width=100, anchor="center")
 
         style = ttk.Style()
-        style.configure("Treeview", background="#2d2d2d", foreground="#ffffff",
-                        fieldbackground="#2d2d2d", rowheight=26)
-        style.configure("Treeview.Heading", background="#3c3c3c", foreground="#ffffff")
-        style.map("Treeview", background=[("selected", "#555555")])
+        style.configure("Treeview", background=BG_TREE, foreground=FG,
+                        fieldbackground=BG_TREE, rowheight=26)
+        style.configure("Treeview.Heading", background=BTN, foreground=FG)
+        style.map("Treeview", background=[("selected", BTN_ACTIVE)])
 
-        tree.tag_configure("active", foreground="#00cc66")
-        tree.tag_configure("blocked", foreground="#ff4444")
+        tree.tag_configure("active", foreground=GREEN_ALT)
+        tree.tag_configure("blocked", foreground=RED)
 
         for acc_id, account in self.bank._accounts.items():
             status = "Block" if account.is_blocked else "Active"
@@ -434,10 +438,10 @@ class ATMApp:
         window = tk.Toplevel(self.root)
         window.title("Block / Release Accounts")
         window.geometry("650x440")
-        window.configure(bg="#1e1e1e")
+        window.configure(bg=BG)
         window.grab_set()
 
-        tk.Label(window, text="Block / Release Accounts", bg="#1e1e1e", fg="#ffffff",
+        tk.Label(window, text="Block / Release Accounts", bg=BG, fg=FG,
                  font=("Arial", 14, "bold")).pack(pady=(12, 6))
 
         columns = ("id", "name", "balance", "status", "action")
@@ -456,13 +460,13 @@ class ATMApp:
         tree.column("action", width=130, anchor="center")
 
         style = ttk.Style()
-        style.configure("Treeview", background="#2d2d2d", foreground="#ffffff",
-                        fieldbackground="#2d2d2d", rowheight=26)
-        style.configure("Treeview.Heading", background="#3c3c3c", foreground="#ffffff")
-        style.map("Treeview", background=[("selected", "#555555")])
+        style.configure("Treeview", background=BG_TREE, foreground=FG,
+                        fieldbackground=BG_TREE, rowheight=26)
+        style.configure("Treeview.Heading", background=BTN, foreground=FG)
+        style.map("Treeview", background=[("selected", BTN_ACTIVE)])
 
-        tree.tag_configure("active", foreground="#00cc66")
-        tree.tag_configure("blocked", foreground="#ff4444")
+        tree.tag_configure("active", foreground=GREEN_ALT)
+        tree.tag_configure("blocked", foreground=RED)
 
         def populate():
             tree.delete(*tree.get_children())
@@ -487,11 +491,11 @@ class ATMApp:
             save_data(self.bank)
             populate()
 
-        frame_bottom = tk.Frame(window, bg="#1e1e1e")
+        frame_bottom = tk.Frame(window, bg=BG)
         frame_bottom.pack(fill="x", padx=10, pady=(6, 10))
 
         tk.Button(frame_bottom, text="Block / Unblock Selected",
-                  bg="#e07b00", fg="#ffffff", activebackground="#c46a00",
+                  bg=ORANGE, fg=FG, activebackground=ORANGE_A,
                   font=("Arial", 11, "bold"), relief="flat", width=24,
                   command=toggle_selected).pack(pady=4)
 
@@ -504,35 +508,35 @@ class ATMApp:
         window = tk.Toplevel(self.root)
         window.title("Create New Account")
         window.geometry("380x320")
-        window.configure(bg="#1e1e1e")
+        window.configure(bg=BG)
         window.grab_set()
 
-        tk.Label(window, text="Create New Account", bg="#1e1e1e", fg="#ffffff",
+        tk.Label(window, text="Create New Account", bg=BG, fg=FG,
                  font=("Arial", 14, "bold")).pack(pady=(16, 10))
 
-        form = tk.Frame(window, bg="#1e1e1e")
+        form = tk.Frame(window, bg=BG)
         form.pack(padx=20, fill="x")
 
-        tk.Label(form, text="Account Name:", bg="#1e1e1e", fg="#cccccc",
+        tk.Label(form, text="Account Name:", bg=BG, fg=FG_LIGHT,
                  font=("Arial", 11)).grid(row=0, column=0, sticky="w", pady=6)
-        name_entry = tk.Entry(form, font=("Arial", 11), bg="#2d2d2d", fg="#ffffff",
-                              insertbackground="#ffffff", relief="flat", width=22)
+        name_entry = tk.Entry(form, font=("Arial", 11), bg=BG_TREE, fg=FG,
+                              insertbackground=FG, relief="flat", width=22)
         name_entry.grid(row=0, column=1, padx=(10, 0), pady=6)
 
-        tk.Label(form, text="Initial Balance:", bg="#1e1e1e", fg="#cccccc",
+        tk.Label(form, text="Initial Balance:", bg=BG, fg=FG_LIGHT,
                  font=("Arial", 11)).grid(row=1, column=0, sticky="w", pady=6)
-        balance_entry = tk.Entry(form, font=("Arial", 11), bg="#2d2d2d", fg="#ffffff",
-                                 insertbackground="#ffffff", relief="flat", width=22)
+        balance_entry = tk.Entry(form, font=("Arial", 11), bg=BG_TREE, fg=FG,
+                                 insertbackground=FG, relief="flat", width=22)
         balance_entry.insert(0, "0")
         balance_entry.grid(row=1, column=1, padx=(10, 0), pady=6)
 
-        result_frame = tk.Frame(window, bg="#1e1e1e")
+        result_frame = tk.Frame(window, bg=BG)
         result_frame.pack(padx=20, pady=(10, 0), fill="x")
 
-        id_label = tk.Label(result_frame, text="", bg="#1e1e1e", fg="#00cc66",
+        id_label = tk.Label(result_frame, text="", bg=BG, fg=GREEN_ALT,
                             font=("Arial", 11, "bold"))
         id_label.pack(anchor="w")
-        pin_label = tk.Label(result_frame, text="", bg="#1e1e1e", fg="#00cc66",
+        pin_label = tk.Label(result_frame, text="", bg=BG, fg=GREEN_ALT,
                              font=("Arial", 11, "bold"))
         pin_label.pack(anchor="w")
 
@@ -560,7 +564,7 @@ class ATMApp:
             submit_btn.config(text="Account created successfully,\ncopy details and close window", state="disabled", width=34)
 
         submit_btn = tk.Button(window, text="Create Account",
-                               bg="#00884d", fg="#ffffff", activebackground="#006b3c",
+                               bg=GREEN_BTN, fg=FG, activebackground=GREEN_BTN_A,
                                font=("Arial", 11, "bold"), relief="flat", width=20,
                                command=submit)
         submit_btn.pack(pady=(12, 4))
