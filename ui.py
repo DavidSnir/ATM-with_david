@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 from storage import load_data, save_data
-from style import (BG, BG_CARD, BG_TREE, BTN, BTN_ACTIVE,
+from style import (BG, BG_CARD, BG_TREE, BTN, BTN_HOVER,
                    FG, FG_MUTED, FG_LIGHT,
                    GREEN,
                    RED, ORANGE)
@@ -11,7 +11,7 @@ from style import (BG, BG_CARD, BG_TREE, BTN, BTN_ACTIVE,
 class ATMApp:
     # const configuration for many shared buttons:
     BTN_CFG = dict(width=25, bg=BTN, fg=FG,
-                   activebackground=BTN_ACTIVE, font=("Arial", 11), relief="flat")
+                   activebackground=BTN_HOVER, font=("Arial", 11), relief="flat")
 
     def __init__(self):
         self.bank = load_data()
@@ -33,7 +33,7 @@ class ATMApp:
     def shared_return_to_log_in_button(self):
         """to be use when return to 'log in' screen from user menu or admin zone"""
         tk.Button(self.root, text="Return", width=25, bg=BTN, fg=FG_MUTED,
-                  activebackground=BTN_ACTIVE, font=("Arial", 10), relief="flat",
+                  activebackground=BTN_HOVER, font=("Arial", 10), relief="flat",
                   command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
 
     # * shared UI DESIGN for all screens --- finish * #
@@ -357,7 +357,7 @@ class ATMApp:
                 messagebox.showerror("Error", "Current PIN is incorrect", parent=window)
 
         tk.Button(window, text="Change PIN", bg=BTN, fg=FG,
-                  activebackground=BTN_ACTIVE, relief="flat",
+                  activebackground=BTN_HOVER, relief="flat",
                   command=confirm_change).pack(pady=14)
 
     def handle_exit(self):
@@ -423,7 +423,7 @@ class ATMApp:
         style.configure("Treeview", background=BG_TREE, foreground=FG,
                         fieldbackground=BG_TREE, rowheight=26)
         style.configure("Treeview.Heading", background=BTN, foreground=FG)
-        style.map("Treeview", background=[("selected", BTN_ACTIVE)])
+        style.map("Treeview", background=[("selected", BTN_HOVER)])
 
         tree.tag_configure("active", foreground=GREEN)
         tree.tag_configure("blocked", foreground=RED)
@@ -472,7 +472,7 @@ class ATMApp:
         style.configure("Treeview", background=BG_TREE, foreground=FG,
                         fieldbackground=BG_TREE, rowheight=26)
         style.configure("Treeview.Heading", background=BTN, foreground=FG)
-        style.map("Treeview", background=[("selected", BTN_ACTIVE)])
+        style.map("Treeview", background=[("selected", BTN_HOVER)])
 
         tree.tag_configure("active", foreground=GREEN)
         tree.tag_configure("blocked", foreground=RED)
