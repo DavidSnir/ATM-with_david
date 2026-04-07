@@ -8,6 +8,7 @@ from style import (BG, BG_CARD, BG_TREE, BTN, BTN_ACTIVE,
 
 
 class ATMApp:
+    # const shortcut config for many shared button:
     BTN_CFG = dict(width=25, bg=BTN, fg=FG,
                    activebackground=BTN_ACTIVE, font=("Arial", 11), relief="flat")
 
@@ -18,7 +19,7 @@ class ATMApp:
         # * shared UI DESIGN for all screens * #
         self.root = tk.Tk()
         self.root.title("David & Yuval © ATM")  # window upper title
-        self.root.geometry("390x844")  # iPhone 14 portrait
+        self.root.geometry("390x844")  # iPhone 14 size portrait
 
         # for dark background
         self.root.configure(bg=BG)
@@ -29,6 +30,11 @@ class ATMApp:
         # for dark background - end.
         # * shared UI DESIGN for all screens --- finish * #
         # * shared UI DESIGN for all screens --- finish * #
+
+    def _add_logout_button(self):
+        tk.Button(self.root, text="Backward", width=25, bg=BTN, fg=FG_MUTED,
+                  activebackground=BTN_ACTIVE, font=("Arial", 10), relief="flat",
+                  command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
 
     # * UI DESIGN + Logic of 'Log In' screen * #
     # * UI DESIGN + Logic of 'Log In' screen * #
@@ -135,9 +141,7 @@ class ATMApp:
         exit_btn.pack(pady=5)
         exit_btn.config(command=self.handle_exit)
 
-        tk.Button(self.root, text="← Log Out", width=25, bg=BTN, fg=FG_MUTED,
-                  activebackground=BTN_ACTIVE, font=("Arial", 10), relief="flat",
-                  command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
+        self._add_logout_button()
     # * UI DESIGN of 'user Menu' screen - no logic -----finish * #
     # * UI DESIGN of 'user Menu' screen - no logic -----finish * #
 
@@ -376,9 +380,7 @@ class ATMApp:
                                       command=self.handle_block_account)
         block_account_btn.pack(pady=5)
 
-        tk.Button(self.root, text="← Log Out", width=25, bg=BTN, fg=FG_MUTED,
-                  activebackground=BTN_ACTIVE, font=("Arial", 10), relief="flat",
-                  command=self.show_login_screen).place(relx=0.5, rely=0.94, anchor="center")
+        self._add_logout_button()
 
     # * UI of 'Admin Zone' screen -----finish * #
     # * UI of 'Admin Zone' screen -----finish * #
