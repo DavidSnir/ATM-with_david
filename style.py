@@ -10,11 +10,5 @@ FG_MUTED    = "#aaaaaa"   # secondary / dim text
 FG_LIGHT    = "#cccccc"   # light label text
 
 GREEN       = "#4caf50"   # balance display
-GREEN_ALT   = "#00cc66"   # active-account tag / success labels
-GREEN_BTN   = "#00884d"   # create-account button
-GREEN_BTN_A = "#006b3c"   # create-account button active
-
 RED         = "#ff4444"   # blocked-account tag
-
 ORANGE      = "#e07b00"   # block/unblock button
-ORANGE_A    = "#c46a00"   # block/unblock button active

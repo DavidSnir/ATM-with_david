@@ -4,8 +4,8 @@ from tkinter import ttk, messagebox, simpledialog
 from storage import load_data, save_data
 from style import (BG, BG_CARD, BG_TREE, BTN, BTN_ACTIVE,
                    FG, FG_MUTED, FG_LIGHT,
-                   GREEN, GREEN_ALT, GREEN_BTN, GREEN_BTN_A,
-                   RED, ORANGE, ORANGE_A)
+                   GREEN,
+                   RED, ORANGE)
 
 
 class ATMApp:
@@ -425,7 +425,7 @@ class ATMApp:
         style.configure("Treeview.Heading", background=BTN, foreground=FG)
         style.map("Treeview", background=[("selected", BTN_ACTIVE)])
 
-        tree.tag_configure("active", foreground=GREEN_ALT)
+        tree.tag_configure("active", foreground=GREEN)
         tree.tag_configure("blocked", foreground=RED)
 
         for acc_id, account in self.bank._accounts.items():
@@ -474,7 +474,7 @@ class ATMApp:
         style.configure("Treeview.Heading", background=BTN, foreground=FG)
         style.map("Treeview", background=[("selected", BTN_ACTIVE)])
 
-        tree.tag_configure("active", foreground=GREEN_ALT)
+        tree.tag_configure("active", foreground=GREEN)
         tree.tag_configure("blocked", foreground=RED)
 
         def populate():
@@ -504,7 +504,7 @@ class ATMApp:
         frame_bottom.pack(fill="x", padx=10, pady=(6, 10))
 
         tk.Button(frame_bottom, text="Block / Unblock Selected",
-                  bg=ORANGE, fg=FG, activebackground=ORANGE_A,
+                  bg=ORANGE, fg=FG, activebackground=ORANGE,
                   font=("Arial", 11, "bold"), relief="flat", width=24,
                   command=toggle_selected).pack(pady=4)
 
@@ -542,10 +542,10 @@ class ATMApp:
         result_frame = tk.Frame(window, bg=BG)
         result_frame.pack(padx=20, pady=(10, 0), fill="x")
 
-        id_label = tk.Label(result_frame, text="", bg=BG, fg=GREEN_ALT,
+        id_label = tk.Label(result_frame, text="", bg=BG, fg=GREEN,
                             font=("Arial", 11, "bold"))
         id_label.pack(anchor="w")
-        pin_label = tk.Label(result_frame, text="", bg=BG, fg=GREEN_ALT,
+        pin_label = tk.Label(result_frame, text="", bg=BG, fg=GREEN,
                              font=("Arial", 11, "bold"))
         pin_label.pack(anchor="w")
 
@@ -573,7 +573,7 @@ class ATMApp:
             submit_btn.config(text="Account created successfully,\ncopy details and close window", state="disabled", width=34)
 
         submit_btn = tk.Button(window, text="Create Account",
-                               bg=GREEN_BTN, fg=FG, activebackground=GREEN_BTN_A,
+                               bg=GREEN, fg=FG, activebackground=GREEN,
                                font=("Arial", 11, "bold"), relief="flat", width=20,
                                command=submit)
         submit_btn.pack(pady=(12, 4))
