@@ -8,6 +8,9 @@ from style import (BG, BG_CARD, BG_TREE, BTN, BTN_ACTIVE,
 
 
 class ATMApp:
+    BTN_CFG = dict(width=25, bg=BTN, fg=FG,
+                   activebackground=BTN_ACTIVE, font=("Arial", 11), relief="flat")
+
     def __init__(self):
         self.bank = load_data()
 
@@ -77,16 +80,16 @@ class ATMApp:
                 messagebox.showerror("Access Denied", "Incorrect admin password")
 
         # Log In button:
-        tk.Button(self.root, text="Log In", width=25, bg=BTN, fg=FG,
-                  activebackground=BTN_ACTIVE, command=handle_login).place(relx=0.5, rely=0.65, anchor="center")
+        tk.Button(self.root, text="Log In", **self.BTN_CFG,
+                  command=handle_login).place(relx=0.5, rely=0.65, anchor="center")
 
         # Admin Zone button:
-        tk.Button(self.root, text="Admin Zone", width=25, bg=BTN, fg=FG,
-                  activebackground=BTN_ACTIVE, command=handle_admin).place(relx=0.5, rely=0.72, anchor="center")
+        tk.Button(self.root, text="Admin Zone", **self.BTN_CFG,
+                  command=handle_admin).place(relx=0.5, rely=0.72, anchor="center")
 
         # Exit button:
-        tk.Button(self.root, text="Exit", width=25, command=self.root.destroy,
-                  bg=BTN, fg=FG, activebackground=BTN_ACTIVE).place(relx=0.5, rely=0.79, anchor="center")
+        tk.Button(self.root, text="Exit", **self.BTN_CFG,
+                  command=self.root.destroy).place(relx=0.5, rely=0.79, anchor="center")
 
     # * UI DESIGN + Logic of 'Log In' screen -----finish * #
     # * UI DESIGN + Logic of 'Log In' screen -----finish * #
@@ -113,25 +116,22 @@ class ATMApp:
         btn_frame = tk.Frame(self.root, bg=BG)
         btn_frame.place(relx=0.5, rely=0.57, anchor="center")
 
-        btn_cfg = dict(width=25, bg=BTN, fg=FG,
-                       activebackground=BTN_ACTIVE, font=("Arial", 11), relief="flat")
-
-        deposit_btn = tk.Button(btn_frame, text="Deposit", **btn_cfg)
+        deposit_btn = tk.Button(btn_frame, text="Deposit", **self.BTN_CFG)
         deposit_btn.pack(pady=5)
         deposit_btn.config(command=self.handle_deposit)
-        withdraw_btn = tk.Button(btn_frame, text="Withdraw",   **btn_cfg)
+        withdraw_btn = tk.Button(btn_frame, text="Withdraw",   **self.BTN_CFG)
         withdraw_btn.pack(pady=5)
         withdraw_btn.config(command=self.handle_withdraw)
-        transfer_btn = tk.Button(btn_frame, text="Transfer",       **btn_cfg)
+        transfer_btn = tk.Button(btn_frame, text="Transfer",       **self.BTN_CFG)
         transfer_btn.pack(pady=5)
         transfer_btn.config(command=self.handle_transfer)
-        history_btn = tk.Button(btn_frame, text="History",    **btn_cfg)
+        history_btn = tk.Button(btn_frame, text="History",    **self.BTN_CFG)
         history_btn.pack(pady=5)
         history_btn.config(command=self.handle_history)
-        change_pin_btn = tk.Button(btn_frame, text="Change PIN", **btn_cfg)
+        change_pin_btn = tk.Button(btn_frame, text="Change PIN", **self.BTN_CFG)
         change_pin_btn.pack(pady=5)
         change_pin_btn.config(command=self.handle_change_pin)
-        exit_btn = tk.Button(btn_frame, text="Exit entire App", **btn_cfg)
+        exit_btn = tk.Button(btn_frame, text="Exit entire App", **self.BTN_CFG)
         exit_btn.pack(pady=5)
         exit_btn.config(command=self.handle_exit)
 
@@ -364,18 +364,15 @@ class ATMApp:
         btn_frame = tk.Frame(self.root, bg=BG)
         btn_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-        btn_cfg = dict(width=25, bg=BTN, fg=FG,
-                       activebackground=BTN_ACTIVE, font=("Arial", 11), relief="flat")
-
-        create_account_btn = tk.Button(btn_frame, text="Create new Account", **btn_cfg,
+        create_account_btn = tk.Button(btn_frame, text="Create new Account", **self.BTN_CFG,
                                        command=self.handle_create_account)
         create_account_btn.pack(pady=5)
 
-        watch_accounts_btn = tk.Button(btn_frame, text="Watch all accounts", **btn_cfg,
+        watch_accounts_btn = tk.Button(btn_frame, text="Watch all accounts", **self.BTN_CFG,
                                        command=self.handle_watch_accounts)
         watch_accounts_btn.pack(pady=5)
 
-        block_account_btn = tk.Button(btn_frame, text="Block / release accounts", **btn_cfg,
+        block_account_btn = tk.Button(btn_frame, text="Block / release accounts", **self.BTN_CFG,
                                       command=self.handle_block_account)
         block_account_btn.pack(pady=5)
 
