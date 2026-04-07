@@ -312,24 +312,24 @@ class LoginPage(ttk.Frame):
             cursor="hand2",
             command=self.login_button_acion
         )
-        self.auth_button.pack(pady=(20, 102), padx=62, fill="x", anchor="w")
+        self.auth_button.pack(pady=(20, 8), padx=62, fill="x", anchor="w")
 
-        # self.admin_button = ttk.Button(
-        #     self,
-        #     text="Admin",
-        #     style="Login.TButton",
-        #     cursor="hand2"
-        # )
-        # self.admin_button.pack(pady=(0, 8), padx=62, fill="x", anchor="w")
+        self.admin_button = ttk.Button(
+            self,
+            text="Admin",
+            style="Login.TButton",
+            cursor="hand2"
+        )
+        self.admin_button.pack(pady=(0, 8), padx=62, fill="x", anchor="w")
 
-        # self.exit_button = ttk.Button(
-        #     self,
-        #     text="Exit",
-        #     style="Login.TButton",
-        #     cursor="hand2",
-        #     command=self.controller.destroy
-        # )
-        # self.exit_button.pack(pady=(0, 102), padx=62, fill="x", anchor="w")
+        self.exit_button = ttk.Button(
+            self,
+            text="Exit",
+            style="Login.TButton",
+            cursor="hand2",
+            command=self.controller.destroy
+        )
+        self.exit_button.pack(pady=(0, 102), padx=62, fill="x", anchor="w")
 
     def login_button_acion(self):
         input_id: str = self.id_entry.get()
