@@ -118,7 +118,7 @@ class ATMApp:
                  font=("Arial", 15, "bold")).pack(pady=(12, 2))
         tk.Label(info_frame, text=f"ID: {account.id}", bg=BG_ENTRY, fg=FG_MUTED,
                  font=("Arial", 11)).pack()
-        self.balance_label = tk.Label(info_frame, text=f"Balance: ${account.balance:,.2f}", bg=BG_ENTRY, fg=GREEN,
+        self.balance_label = tk.Label(info_frame, text=f"Balance: ₪{account.balance:,.2f}", bg=BG_ENTRY, fg=GREEN,
                                       font=("Arial", 13, "bold"))
         self.balance_label.pack(pady=(4, 12))
 
@@ -174,8 +174,8 @@ class ATMApp:
             success = account.deposit(amount, self.current_pin)
             if success:
                 save_data(self.bank)
-                self.balance_label.config(text=f"Balance: ${account.balance:,.2f}")
-                messagebox.showinfo("Success", f"Deposited ${amount:,.2f} successfully", parent=window)
+                self.balance_label.config(text=f"Balance: ₪{account.balance:,.2f}")
+                messagebox.showinfo("Success", f"Deposited ₪{amount:,.2f} successfully", parent=window)
                 window.destroy()
             else:
                 messagebox.showerror("Error", "Deposit failed", parent=window)
@@ -204,8 +204,8 @@ class ATMApp:
             success = account.withdraw(amount, self.current_pin)
             if success:
                 save_data(self.bank)
-                self.balance_label.config(text=f"Balance: ${account.balance:,.2f}")
-                messagebox.showinfo("Success", f"Withdrew ${amount:,.2f} successfully", parent=window)
+                self.balance_label.config(text=f"Balance: ₪{account.balance:,.2f}")
+                messagebox.showinfo("Success", f"Withdrew ₪{amount:,.2f} successfully", parent=window)
                 window.destroy()
             else:
                 messagebox.showerror("Error", "Withdrawal failed", parent=window)
@@ -270,7 +270,7 @@ class ATMApp:
             if success:
                 save_data(self.bank)
                 self.balance_label.config(text=f"Balance: ${sender.balance:,.2f}")
-                messagebox.showinfo("Success", f"Transferred ${amount:,.2f} to account {dest_id}", parent=window)
+                messagebox.showinfo("Success", f"Transferred ₪{amount:,.2f} to account {dest_id}", parent=window)
                 window.destroy()
             else:
                 messagebox.showerror("Error", message, parent=window)
@@ -303,7 +303,7 @@ class ATMApp:
         else:
             for action in account.actions_log:
                 time_str = action["time"].strftime("%Y-%m-%d %H:%M")
-                amount_str = f"${action['amount']:,.2f}"
+                amount_str = f"₪{action['amount']:,.2f}"
                 action_type = action["type"].replace("_", " ").title()
                 counterparty = f" -> {action['counterparty']}" if action["counterparty"] else ""
                 listbox.insert(tk.END, f"  {time_str}  {action_type:<18} {amount_str}{counterparty}")
@@ -431,7 +431,7 @@ class ATMApp:
             status = "Block" if account.is_blocked else "Active"
             tag = "blocked" if account.is_blocked else "active"
             tree.insert("", "end",
-                        values=(acc_id, account.name, f"${account.balance:.2f}", status),
+                        values=(acc_id, account.name, f"₪{account.balance:.2f}", status),
                         tags=(tag,))
 
         scrollbar = ttk.Scrollbar(window, orient="vertical", command=tree.yview)
@@ -483,7 +483,7 @@ class ATMApp:
                 action = "Unblock" if account.is_blocked else "Block"
                 tag = "blocked" if account.is_blocked else "active"
                 tree.insert("", "end",
-                            values=(acc_id, account.name, f"${account.balance:.2f}", status, action),
+                            values=(acc_id, account.name, f"₪{account.balance:.2f}", status, action),
                             tags=(tag,), iid=str(acc_id))
 
         populate()
